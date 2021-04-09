@@ -36,7 +36,7 @@ Reading symbols from ruby...
 Function "Hello" not defined.
 Breakpoint 1 (Hello) pending.
 
-(gdb) run
+(gdb) r
 Starting program: /usr/local/ruby-3.0.0/bin/ruby -I lib -e require\ \"testj\"\;\ Testj::hello
 [Thread debugging using libthread_db enabled]
 Using host libthread_db library "/lib64/libthread_db.so.1".
@@ -65,7 +65,7 @@ Reading symbols from ruby...
 Function "Hello" not defined.
 Breakpoint 1 (Hello) pending.
 
-(gdb) run
+(gdb) r
 Starting program: /usr/local/ruby-3.0.0/bin/ruby -I lib test.rb
 [Thread debugging using libthread_db enabled]
 Using host libthread_db library "/lib64/libthread_db.so.1".
@@ -78,7 +78,7 @@ Missing separate debuginfos, use: dnf debuginfo-install gmp-6.2.0-5.fc33.x86_64 
 ### Run `gdb` with some gdb commands.
 
 ```
-$ gdb -q -ex 'set breakpoint pending on' -ex 'b Hello' -ex run --args ruby -I lib -e 'require "testj"; Testj::hello'
+$ gdb -q -ex 'set breakpoint pending on' -ex 'b Hello' -ex r --args ruby -I lib -e 'require "testj"; Testj::hello'
 Reading symbols from ruby...
 Function "Hello" not defined.
 Breakpoint 1 (Hello) pending.
