@@ -1,0 +1,3 @@
+require "testj"
+
+Testj::hello

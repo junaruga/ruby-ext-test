@@ -46,7 +46,36 @@ Breakpoint 1, Hello (self=7494880) at ../../../../ext/testj/testj_ext.c:8
 Missing separate debuginfos, use: dnf debuginfo-install gmp-6.2.0-5.fc33.x86_64 libxcrypt-4.4.18-1.fc33.x86_64 zlib-1.2.11-23.fc33.x86_64
 ```
 
-### Run `gdb` by setting the break point with `function`.
+### Run `gdb` with a ruby file.
+
+```
+$ cat test.rb
+require "testj"
+
+Testj::hello
+```
+
+```
+$ gdb -q --args ruby -I lib test.rb
+Reading symbols from ruby...
+
+(gdb) set breakpoint pending on
+
+(gdb) b Hello
+Function "Hello" not defined.
+Breakpoint 1 (Hello) pending.
+
+(gdb) run
+Starting program: /usr/local/ruby-3.0.0/bin/ruby -I lib test.rb
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib64/libthread_db.so.1".
+
+Breakpoint 1, Hello (self=7494360) at ../../../../ext/testj/testj_ext.c:8
+8	  printf("Hello\n");
+Missing separate debuginfos, use: dnf debuginfo-install gmp-6.2.0-5.fc33.x86_64 libxcrypt-4.4.18-1.fc33.x86_64 zlib-1.2.11-23.fc33.x86_64
+```
+
+### Run `gdb` with some gdb commands.
 
 ```
 $ gdb -q -ex 'set breakpoint pending on' -ex 'b Hello' -ex run --args ruby -I lib -e 'require "testj"; Testj::hello'
@@ -62,34 +91,18 @@ Breakpoint 1, Hello (self=7494880) at ../../../../ext/testj/testj_ext.c:8
 Missing separate debuginfos, use: dnf debuginfo-install gmp-6.2.0-5.fc33.x86_64 libxcrypt-4.4.18-1.fc33.x86_64 zlib-1.2.11-23.fc33.x86_64
 ```
 
-### Run `gdb` by setting the break point with `file:function`.
+### Set break point with `file:function`.
 
 ```
-$ gdb -q -ex 'set breakpoint pending on' -ex 'b ext/testj/testj_ext.c:Hello' -ex run --args ruby -I lib -e 'require "testj"; Testj::hello'
-Reading symbols from ruby...
+(gdb) b ext/testj/testj_ext.c:Hello
 No source file named ext/testj/testj_ext.c.
 Breakpoint 1 (ext/testj/testj_ext.c:Hello) pending.
-Starting program: /usr/local/ruby-3.0.0/bin/ruby -I lib -e require\ \"testj\"\;\ Testj::hello
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib64/libthread_db.so.1".
-
-Breakpoint 1, Hello (self=7494880) at ../../../../ext/testj/testj_ext.c:8
-8	  printf("Hello\n");
-Missing separate debuginfos, use: dnf debuginfo-install gmp-6.2.0-5.fc33.x86_64 libxcrypt-4.4.18-1.fc33.x86_64 zlib-1.2.11-23.fc33.x86_64
 ```
 
-### Run `gdb` by setting the break point with `file:line_number`.
+### Set break point with `file:line_number`.
 
 ```
-$ gdb -q -ex 'set breakpoint pending on' -ex 'b ext/testj/testj_ext.c:8' -ex run --args ruby -I lib -e 'require "testj"; Testj::hello'
-Reading symbols from ruby...
+(gdb) b ext/testj/testj_ext.c:8
 No source file named ext/testj/testj_ext.c.
 Breakpoint 1 (ext/testj/testj_ext.c:8) pending.
-Starting program: /usr/local/ruby-3.0.0/bin/ruby -I lib -e require\ \"testj\"\;\ Testj::hello
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib64/libthread_db.so.1".
-
-Breakpoint 1, Hello (self=7494880) at ../../../../ext/testj/testj_ext.c:8
-8	  printf("Hello\n");
-Missing separate debuginfos, use: dnf debuginfo-install gmp-6.2.0-5.fc33.x86_64 libxcrypt-4.4.18-1.fc33.x86_64 zlib-1.2.11-23.fc33.x86_64
 ```
