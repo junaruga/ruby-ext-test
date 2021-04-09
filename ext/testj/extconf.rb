@@ -1,6 +1,6 @@
-require "mkmf"
+require 'mkmf'
 
-CONFIG["debugflags"] = "-ggdb3"
-CONFIG["optflags"] = "-O0"
+CONFIG['debugflags'] = '-ggdb3'
+CONFIG['optflags'] = '-O0'
 
-create_makefile("testj/testj")
+create_makefile('testj/testj')
