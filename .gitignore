@@ -1,4 +1,6 @@
 *.swp
 *~
+/.bundle
+/Gemfile.lock
 /lib/testj/testj.so
 /tmp
