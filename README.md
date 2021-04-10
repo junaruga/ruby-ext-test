@@ -106,3 +106,44 @@ Breakpoint 1 (ext/testj/testj_ext.c:Hello) pending.
 No source file named ext/testj/testj_ext.c.
 Breakpoint 1 (ext/testj/testj_ext.c:8) pending.
 ```
+
+### Caution: ruby in rubypick RPM.
+
+When you are using `ruby` command by `rubypick` RPM package, `gdb` can not read symbols and execute by the message `not in executable format: file format not recognized`.
+
+
+```
+$ rpm -qf /usr/bin/ruby
+rubypick-1.1.1-13.fc33.noarch
+
+$ gdb -q --args /usr/bin/ruby
+"0x7fff95453d60s": not in executable format: file format not recognized
+```
+
+This is because the `ruby` is shell script that can call `/usr/bin/ruby-mri` internally. Not a binary file.
+
+```
+$ file /usr/bin/ruby
+/usr/bin/ruby: Bourne-Again shell script, ASCII text executable
+
+$ head -3 /usr/bin/ruby
+#!/usr/bin/bash
+declare -A INTERPRETER_LIST
+INTERPRETER_LIST=([_jruby_]=/usr/bin/jruby [_mri_]=/usr/bin/ruby-mri)
+```
+
+Try the `ruby-mri` command to read symbols in this case.
+
+```
+$ rpm -qf /usr/bin/ruby-mri
+ruby-2.7.2-135.fc33.x86_64
+
+$ file /usr/bin/ruby-mri
+/usr/bin/ruby-mri: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=f1f73707ee8fdb0ccc6fe7d8c9eacb2ed19e9e39, for GNU/Linux 3.2.0, stripped
+
+$ gdb -q --args /usr/bin/ruby-mri
+Reading symbols from /usr/bin/ruby-mri...
+Reading symbols from .gnu_debugdata for /usr/bin/ruby-mri...
+(No debugging symbols found in .gnu_debugdata for /usr/bin/ruby-mri)
+Missing separate debuginfos, use: dnf debuginfo-install ruby-2.7.2-135.fc33.x86_64
+```
