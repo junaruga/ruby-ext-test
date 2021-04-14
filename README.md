@@ -8,6 +8,12 @@ $ rake clean
 $ rake compile
 ```
 
+For debuggging, run the following command.
+
+```
+$ rake debug compile
+```
+
 ## Run
 
 ```
