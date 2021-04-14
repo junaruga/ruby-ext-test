@@ -1,0 +1,22 @@
+name: Build
+on: [push, pull_request]
+jobs:
+  build:
+    name: >-
+      testj
+    runs-on: ubuntu-20.04
+    continue-on-error: ${{ matrix.allow-failure || false }}
+    strategy:
+      matrix:
+        include:
+          - {tasks: ''}
+          - {tasks: 'debug compile spec'}
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      # https://github.com/ruby/setup-ruby
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+      - run: bundle install --standalone
+      - run: bundle exec rake ${{ matrix.tasks }}
