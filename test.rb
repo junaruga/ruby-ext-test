@@ -1,3 +1,4 @@
 require "testj"
 
-Testj::hello
+t = Testj
+t.hello
