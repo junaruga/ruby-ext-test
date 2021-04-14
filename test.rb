@@ -1,4 +1,4 @@
-require "testj"
+require 'testj'
 
 t = Testj
 t.hello

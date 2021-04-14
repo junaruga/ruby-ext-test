@@ -13,7 +13,7 @@ rescue LoadError
 end
 
 # See https://github.com/sparklemotion/nokogiri/blob/main/rakelib/debug.rake
-desc "Set environment variables to build and/or test with debug options"
+desc 'Set environment variables to build and/or test with debug options'
 task :debug do
   ENV['TESTJ_DEBUG'] = 'true'
   ENV['CFLAGS'] ||= ''
