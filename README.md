@@ -1,5 +1,7 @@
 # ruby-ext-test
 
+[![Build](https://github.com/junaruga/ruby-ext-test/actions/workflows/build.yml/badge.svg)](https://github.com/junaruga/ruby-ext-test/actions/workflows/build.yml)
+
 ## Compile
 
 ```
